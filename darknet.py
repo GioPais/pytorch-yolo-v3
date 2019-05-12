@@ -21,7 +21,7 @@ class test_net(nn.Module):
     
     def forward(self, x):
         x = x.view(-1)
-        fwd = nn.Sequential(self.linear_1, *self.middle, self.output)
+        fwd = nn.Sequential(self.linear_1, self.middle, self.output)
         return fwd(x)
         
 def get_test_input():
@@ -259,7 +259,7 @@ def create_modules(blocks):
         #Yolo is the detection layer
         elif x["type"] == "yolo":
             mask = x["mask"].split(",")
-            mask = [int(x) for x in mask]
+            mask = [int(xm) for xm in mask]
             
             
             anchors = x["anchors"].split(",")

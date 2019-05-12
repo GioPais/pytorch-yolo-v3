@@ -26,7 +26,7 @@ class test_net(nn.Module):
     
     def forward(self, x):
         x = x.view(-1)
-        fwd = nn.Sequential(self.linear_1, *self.middle, self.output)
+        fwd = nn.Sequential(self.linear_1, self.middle, self.output)
         return fwd(x)
         
 def get_test_input(input_dim, CUDA):
@@ -231,7 +231,8 @@ if __name__ ==  '__main__':
             output = prediction
             write = 1
         else:
-            output = torch.cat((output,prediction))
+            if(output.size()[1]==prediction.size()[1]):
+                output = torch.cat((output,prediction))
             
         
         
@@ -276,8 +277,9 @@ if __name__ ==  '__main__':
     
     class_load = time.time()
 
-    colors = pkl.load(open("pallete", "rb"))
-    
+    #colors = pkl.load(open("pallete", "rb"))
+    colors = [[0,0,200],[0,200,0],[0,200,200],[200,0,0],[200,0,200],[200,200,0]]
+
     
     draw = time.time()
 
